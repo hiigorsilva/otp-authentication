@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@prisma/client": "^5.22.0",
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "git-commit-msg-linter": "^5.0.8",
@@ -28,6 +29,7 @@
     "@types/uuid": "^10.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.10",
+    "prisma": "^5.22.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }
