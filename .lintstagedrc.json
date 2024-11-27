@@ -1,0 +1,3 @@
+{
+  "*.ts?(x)": ["biome check --write", "biome check"]
+}
