@@ -2,7 +2,8 @@ import type { RequestHandler } from 'express'
 import { sendEmail } from '../libs/mailtrap'
 import { authSignInSchema } from '../schemas/auth-signin'
 import { authSignUpSchema } from '../schemas/auth-signup'
-import { generateOTP } from '../services/otp'
+import { authUseOTPSchema } from '../schemas/auth-useotp'
+import { generateOTP, validateOTP } from '../services/otp'
 import { createUser, getUserByEmail } from '../services/user'
 
 export const signin: RequestHandler = async (req, res) => {
@@ -54,4 +55,24 @@ export const signup: RequestHandler = async (req, res) => {
 
   // retornar os dados do usuário criado
   res.status(201).json({ user: newUser })
+}
+
+export const useOTP: RequestHandler = async (req, res) => {
+  // validar dados recebidos
+  const data = authUseOTPSchema.safeParse(req.body)
+  if (!data.success) {
+    res.json({ error: data.error.message })
+    return
+  }
+
+  // verificar se o código OTP é válido
+  const user = await validateOTP(data.data.otpId, data.data.code)
+  if (!user) {
+    res.json({ error: 'Código OTP inválido ou expirado.' })
+    return
+  }
+
+  // Criar o JWT
+  // Retornar o JWT
+  res.json({})
 }
