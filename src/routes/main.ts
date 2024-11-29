@@ -6,3 +6,4 @@ export const mainRouter = Router()
 
 mainRouter.get('/ping', pingController.ping)
 mainRouter.post('/auth/signin', authController.signin)
+mainRouter.post('/auth/signup', authController.signup)
