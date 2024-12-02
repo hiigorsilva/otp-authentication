@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+// Validar variáveis de ambiente
 const envSchema = z.object({
   PORT: z.string().optional(),
   DATABASE_URL: z.string({ required_error: 'DATABASE_URL não definido' }),
