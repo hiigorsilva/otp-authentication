@@ -9,6 +9,15 @@ export const getUserByEmail = async (email: string) => {
   return user
 }
 
+export const getUserById = async (id: string) => {
+  const user = await db.user.findUnique({
+    where: {
+      id: id,
+    },
+  })
+  return user
+}
+
 export const createUser = async (name: string, email: string) => {
   const user = await db.user.create({
     data: {
