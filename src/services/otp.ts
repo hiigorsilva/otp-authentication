@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid'
+import { v7 as uuid } from 'uuid'
 import { db } from '../libs/prisma'
 
 export const generateOTP = async (userId: string) => {
@@ -7,7 +7,7 @@ export const generateOTP = async (userId: string) => {
     .map(() => Math.floor(Math.random() * 10))
 
   const codeOTP = otpArray.join('')
-  const expiresAt = new Date(new Date().getTime() + 30 * 60000)
+  const expiresAt = new Date(new Date().getTime() + 30 * 60000) // 30 minutos
 
   const otp = await db.otp.create({
     data: {
