@@ -1,4 +1,5 @@
 import type { RequestHandler } from 'express'
+import { createJWT } from '../libs/jwt'
 import { sendEmail } from '../libs/mailtrap'
 import { authSignInSchema } from '../schemas/auth-signin'
 import { authSignUpSchema } from '../schemas/auth-signup'
@@ -10,7 +11,7 @@ export const signin: RequestHandler = async (req, res) => {
   // validar dados recebidos
   const data = authSignInSchema.safeParse(req.body)
   if (!data.success) {
-    res.json({ error: data.error.message })
+    res.json({ error: data.error.flatten().fieldErrors })
     return
   }
 
@@ -39,7 +40,7 @@ export const signup: RequestHandler = async (req, res) => {
   // validar dados recebidos
   const data = authSignUpSchema.safeParse(req.body)
   if (!data.success) {
-    res.json({ error: data.error.message })
+    res.json({ error: data.error.flatten().fieldErrors })
     return
   }
 
@@ -61,7 +62,7 @@ export const useOTP: RequestHandler = async (req, res) => {
   // validar dados recebidos
   const data = authUseOTPSchema.safeParse(req.body)
   if (!data.success) {
-    res.json({ error: data.error.message })
+    res.json({ error: data.error.flatten().fieldErrors })
     return
   }
 
@@ -73,6 +74,8 @@ export const useOTP: RequestHandler = async (req, res) => {
   }
 
   // Criar o JWT
+  const token = createJWT(user.id)
+
   // Retornar o JWT
-  res.json({})
+  res.json({ token, user })
 }
