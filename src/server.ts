@@ -2,6 +2,7 @@ import cors from 'cors'
 import express, { urlencoded } from 'express'
 import helmet from 'helmet'
 import { mainRouter } from './routes/main'
+import { env } from './schemas/env'
 
 // MIDDLEWARES
 const server = express()
@@ -14,7 +15,7 @@ server.use(express.json())
 server.use(mainRouter)
 
 // START SERVER
-const PORT = process.env.PORT || 3333
+const PORT = env.PORT || 3333
 server.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`)
 })
